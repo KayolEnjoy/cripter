@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptor/Decriptor Text | Demo Tools! | $100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/10.6.0/jsrsasign-all-min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .card-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+        .card {
+            margin-bottom: 30px;
+        }
+        .form-control, .btn, .input-group-text {
+            border-radius: 0.25rem;
+        }
+        .btn-copy {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .blurred {
+            filter: blur(5px);
+            pointer-events: none; /* Agar tidak bisa diklik */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="content">
+        <h1 class="text-center">Encode Decode Kriptografi</h1>
+        <br>
+        
+        
+        <div class="row">
+            <!-- Caesar Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Caesar Cipher</h5>
+                        <div class="mb-3">
+                            <label for="caesarInput" class="form-label">Teks Asli</label>
+                            <textarea id="caesarInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shiftValue" class="form-label">Jumlah Shift</label>
+                            <input type="number" id="shiftValue" class="form-control" value="3">
+                        </div>
+                        <button id="caesarEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="caesarDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="caesarOutput" class="form-label">Hasil</label>
+                            <textarea id="caesarOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="caesarCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Atbash Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Atbash Cipher</h5>
+                        <div class="mb-3">
+                            <label for="atbashInput" class="form-label">Teks Asli</label>
+                            <textarea id="atbashInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <button id="atbashEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi  / Deskripsi</button>
+                        <!-- <button id="atbashDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button> -->
+                        <div class="mb-3">
+                            <label for="atbashOutput" class="form-label">Hasil</label>
+                            <textarea id="atbashOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="atbashCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Rail Fence Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Rail Fence Cipher</h5>
+                        <div class="mb-3">
+                            <label for="railFenceInput" class="form-label">Teks Asli</label>
+                            <textarea id="railFenceInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <button id="railFenceEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="railFenceDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="railFenceOutput" class="form-label">Hasil</label>
+                            <textarea id="railFenceOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="railFenceCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Vigenère Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vigenère Cipher</h5>
+                        <div class="mb-3">
+                            <label for="vigenereInput" class="form-label">Teks Asli</label>
+                            <textarea id="vigenereInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vigenereKey" class="form-label">Kunci Enkripsi</label>
+                            <input type="text" id="vigenereKey" class="form-control" placeholder="Masukkan kunci enkripsi">
+                        </div>
+                        <button id="vigenereEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="vigenereDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="vigenereOutput" class="form-label">Hasil</label>
+                            <textarea id="vigenereOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="vigenereCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Affine Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Affine Cipher</h5>
+                        <div class="mb-3">
+                            <label for="affineInput" class="form-label">Teks Asli</label>
+                            <textarea id="affineInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="affineA" class="form-label">Parameter a</label>
+                            <input type="number" id="affineA" class="form-control" placeholder="Masukkan nilai a (harus coprime dengan 26)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="affineB" class="form-label">Parameter b</label>
+                            <input type="number" id="affineB" class="form-control" placeholder="Masukkan nilai b">
+                        </div>
+                        <button id="affineEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="affineDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="affineOutput" class="form-label">Hasil</label>
+                            <textarea id="affineOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="affineCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Playfair Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Playfair Cipher</h5>
+                        <div class="mb-3">
+                            <label for="playfairInput" class="form-label">Teks Asli</label>
+                            <textarea id="playfairInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="playfairKey" class="form-label">Kunci Enkripsi</label>
+                            <input type="text" id="playfairKey" class="form-control" placeholder="Masukkan kunci enkripsi">
+                        </div>
+                        <button id="playfairEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="playfairDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="playfairOutput" class="form-label">Hasil</label>
+                            <textarea id="playfairOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="playfairCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+        
+            <!-- Hill Cipher Card
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Hill Cipher</h5>
+                        <div class="mb-3">
+                            <label for="hillInput" class="form-label">Teks Asli</label>
+                            <textarea id="hillInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hillKey" class="form-label">Kunci Enkripsi (Matrix)</label>
+                            <input type="text" id="hillKey" class="form-control" placeholder="Masukkan kunci sebagai matrix (misalnya: 3x3 matrix)">
+                        </div>
+                        <button id="hillEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="hillDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="hillOutput" class="form-label">Hasil</label>
+                            <textarea id="hillOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="hillCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
+            <!-- AES Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">AES Cipher</h5>
+                        <div class="mb-3">
+                            <label for="aesInput" class="form-label">Teks Asli</label>
+                            <textarea id="aesInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="aesKey" class="form-label">Kunci Enkripsi (16, 24, atau 32 bytes)</label>
+                            <input type="text" id="aesKey" class="form-control" placeholder="Masukkan kunci enkripsi">
+                        </div>
+                        <div class="mb-3">
+                            <label for="aesIv" class="form-label">IV (Initialization Vector, 16 bytes)</label>
+                            <input type="text" id="aesIv" class="form-control" placeholder="Masukkan IV">
+                        </div>
+                        <button id="aesEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="aesDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="aesOutput" class="form-label">Hasil</label>
+                            <textarea id="aesOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="aesCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+            <!-- RSA Cipher Card -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">RSA Cipher</h5>
+                        <div class="mb-3">
+                            <label for="rsaInput" class="form-label">Teks Asli</label>
+                            <textarea id="rsaInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rsaPublicKey" class="form-label">Kunci Publik (Base64)</label>
+                            <textarea id="rsaPublicKey" class="form-control" rows="3" placeholder="Masukkan kunci publik untuk enkripsi"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rsaPrivateKey" class="form-label">Kunci Pribadi (Base64)</label>
+                            <textarea id="rsaPrivateKey" class="form-control" rows="3" placeholder="Masukkan kunci pribadi untuk dekripsi"></textarea>
+                        </div>
+                        <button id="rsaEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="rsaDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="rsaOutput" class="form-label">Hasil</label>
+                            <textarea id="rsaOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="rsaCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Caesar Rail Base64</h5>
+                        <div class="mb-3">
+                            <label for="customInput" class="form-label">Teks Asli</label>
+                            <textarea id="customInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customKey" class="form-label">Kunci</label>
+                            <input type="number" id="customKey" class="form-control" value="3" min="1" max="25">
+                        </div>
+                        <button id="customEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="customDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="customOutput" class="form-label">Hasil</label>
+                            <textarea id="customOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="customCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Caesar Vign Base64</h5>
+                        <div class="mb-3">
+                            <label for="caevigInput" class="form-label">Teks Asli</label>
+                            <textarea id="caevigInput" class="form-control" rows="3" placeholder="Masukkan teks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="caevigShift" class="form-label">Shift Caesar (1-25)</label>
+                            <input type="number" id="caevigShift" class="form-control" min="1" max="25" placeholder="Masukkan shift Caesar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="caevigKey" class="form-label">Kunci Vigenère</label>
+                            <input type="text" id="caevigKey" class="form-control" placeholder="Masukkan kunci Vigenère">
+                        </div>
+                        <button id="caevigEncrypt" class="btn btn-primary w-100 mb-2">Enkripsi</button>
+                        <button id="caevigDecrypt" class="btn btn-secondary w-100 mb-2">Dekripsi</button>
+                        <div class="mb-3">
+                            <label for="caevigOutput" class="form-label">Hasil</label>
+                            <textarea id="caevigOutput" class="form-control" rows="3" readonly></textarea>
+                        </div>
+                        <button id="caevigCopy" class="btn btn-copy w-100"><i class="fa-solid fa-copy"></i> Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>               
+        <h6 class="text-center text-muted">Sekian,Terimakasih</h6>                           
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script>
+        const correctUsername = 'admin';
+        const correctPassword = 'thekey2231';
+        const currentVersion = '1.0'; // Versi kode saat ini
+        const storageKey = 'accessGranted';
+        const versionKey = 'codeVersion';
+
+        function showAlert() {
+            Swal.fire({
+                title: 'Akses Terbatas',
+                html: `
+                    <input id="username" class="swal2-input" placeholder="Nama Pengguna">
+                    <input id="password" type="password" class="swal2-input" placeholder="Kata Sandi">
+                `,
+                confirmButtonText: 'Masukkan',
+                preConfirm: () => {
+                    const username = Swal.getPopup().querySelector('#username').value;
+                    const password = Swal.getPopup().querySelector('#password').value;
+                    if (!username || !password) {
+                        Swal.showValidationMessage('Nama pengguna dan kata sandi harus diisi');
+                    } else if (username !== correctUsername || password !== correctPassword) {
+                        Swal.showValidationMessage('Nama pengguna atau kata sandi salah');
+                    }
+                    return { username: username, password: password };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { username, password } = result.value;
+                    if (username === correctUsername && password === correctPassword) {
+                        localStorage.setItem(storageKey, 'true'); // Simpan status akses di localStorage
+                        localStorage.setItem(versionKey, currentVersion); // Simpan versi kode di localStorage
+                        Swal.fire('Akses Diberikan', '', 'success').then(() => {
+                            document.getElementById('content').classList.remove('blurred');
+                        });
+                    } else {
+                        showAlert(); // Ulangi alert jika nama pengguna atau kata sandi salah
+                    }
+                } else {
+                    showAlert(); // Ulangi alert jika dialog dibatalkan
+                }
+            });
+        }
+
+        function checkAccess() {
+            const accessGranted = localStorage.getItem(storageKey);
+            const storedVersion = localStorage.getItem(versionKey);
+
+            // Cek versi kode
+            if (storedVersion !== currentVersion) {
+                localStorage.removeItem(storageKey); // Hapus status akses jika versi berbeda
+                localStorage.removeItem(versionKey); // Hapus versi kode yang tersimpan
+            }
+
+            if (accessGranted === 'true') {
+                document.getElementById('content').classList.remove('blurred');
+            } else {
+                document.getElementById('content').classList.add('blurred');
+                showAlert();
+            }
+        }
+
+        // Periksa akses saat halaman dimuat
+        window.onload = checkAccess;
+    </script>
+    <script>
+        let docTitle = document.title;
+        window.addEventListener("blur", () =>{
+        document.title = "Encriptor/Decriptor Text | Kalkulator Kriptografi | Buatan Anak bangsa";
+        })
+        window.addEventListener("focus", () =>{
+        document.title = docTitle;
+        })
+    </script>
+    <script>
+        // Fungsi untuk Caesar Cipher
+        function caesarCipher(str, shift, action) {
+            return str.replace(/[a-z]/gi, function(char) {
+                const start = char <= 'Z' ? 65 : 97;
+                const shiftValue = action === 'decrypt' ? (26 - shift) : shift;
+                return String.fromCharCode((char.charCodeAt(0) - start + shiftValue) % 26 + start);
+            });
+        }
+    
+        // Fungsi untuk Atbash Cipher
+        function atbashCipher(str) {
+            return str.replace(/[a-z]/gi, function(char) {
+                const start = char <= 'Z' ? 65 : 97;
+                return String.fromCharCode(start + (25 - (char.charCodeAt(0) - start)));
+            });
+        }
+    
+        // Event listener untuk tombol enkripsi dan dekripsi pada Caesar Cipher
+        document.getElementById('caesarEncrypt').addEventListener('click', function() {
+            const input = document.getElementById('caesarInput').value;
+            const shift = parseInt(document.getElementById('shiftValue').value);
+            const result = caesarCipher(input, shift, 'encrypt');
+            document.getElementById('caesarOutput').value = result;
+        });
+    
+        document.getElementById('caesarDecrypt').addEventListener('click', function() {
+            const input = document.getElementById('caesarInput').value;
+            const shift = parseInt(document.getElementById('shiftValue').value);
+            const result = caesarCipher(input, shift, 'decrypt');
+            document.getElementById('caesarOutput').value = result;
+        });
+    
+        // Event listener untuk tombol enkripsi dan dekripsi pada Atbash Cipher
+        document.getElementById('atbashEncrypt').addEventListener('click', function() {
+            const input = document.getElementById('atbashInput').value;
+            const result = atbashCipher(input);
+            document.getElementById('atbashOutput').value = result;
+        });
+    
+        document.getElementById('atbashDecrypt').addEventListener('click', function() {
+            const input = document.getElementById('atbashInput').value;
+            const result = atbashCipher(input); // Atbash decryption is the same as encryption
+            document.getElementById('atbashOutput').value = result;
+        });
+    
+        // Event listener untuk tombol salin/copy pada Caesar Cipher
+        document.getElementById('caesarCopy').addEventListener('click', function() {
+            const result = document.getElementById('caesarOutput');
+            result.select();
+            document.execCommand('copy');
+        });
+    
+        // Event listener untuk tombol salin/copy pada Atbash Cipher
+        document.getElementById('atbashCopy').addEventListener('click', function() {
+            const result = document.getElementById('atbashOutput');
+            result.select();
+            document.execCommand('copy');
+        });
+    </script>
+    <script>
+        // Fungsi untuk Rail Fence Cipher
+        function railFenceCipherEncrypt(text, numRails) {
+            if (numRails <= 1) return text;
+            let rail = Array.from({ length: numRails }, () => []);
+            let railIndex = 0, direction = 1;
+    
+            for (let char of text) {
+                rail[railIndex].push(char);
+                railIndex += direction;
+    
+                if (railIndex === numRails || railIndex === -1) {
+                    direction *= -1;
+                    railIndex += direction * 2;
+                }
+            }
+    
+            return rail.flat().join('');
+        }
+    
+        function railFenceCipherDecrypt(text, numRails) {
+            if (numRails <= 1) return text;
+            let rail = Array.from({ length: numRails }, () => []);
+            let railOrder = [];
+    
+            let railIndex = 0, direction = 1;
+    
+            for (let i = 0; i < text.length; i++) {
+                railOrder.push(railIndex);
+                railIndex += direction;
+    
+                if (railIndex === numRails || railIndex === -1) {
+                    direction *= -1;
+                    railIndex += direction * 2;
+                }
+            }
+    
+            let index = 0;
+            for (let i = 0; i < numRails; i++) {
+                for (let j = 0; j < railOrder.length; j++) {
+                    if (railOrder[j] === i) {
+                        rail[i].push(text[index]);
+                        index++;
+                    }
+                }
+            }
+    
+            let result = '';
+            for (let i = 0; i < railOrder.length; i++) {
+                result += rail[railOrder[i]].shift();
+            }
+    
+            return result;
+        }
+         // Event listener untuk Rail Fence Cipher
+        document.getElementById('railFenceEncrypt').addEventListener('click', function() {
+            const input = document.getElementById('railFenceInput').value;
+            const result = railFenceCipherEncrypt(input, 3); // Default number of rails is 3
+            document.getElementById('railFenceOutput').value = result;
+        });
+
+        document.getElementById('railFenceDecrypt').addEventListener('click', function() {
+            const input = document.getElementById('railFenceInput').value;
+            const result = railFenceCipherDecrypt(input, 3); // Default number of rails is 3
+            document.getElementById('railFenceOutput').value = result;
+        });
+         // Event listener untuk tombol salin/copy pada Rail Fence Cipher
+        document.getElementById('railFenceCopy').addEventListener('click', function() {
+            const result = document.getElementById('railFenceOutput');
+            result.select();
+            document.execCommand('copy');
+        });
+    </script>   
+    <script>
+        // Fungsi untuk Vigenère Cipher
+        function vigenereCipher(text, key, action) {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const keyUpper = key.toUpperCase().replace(/[^A-Z]/g, '');
+            let result = '';
+            let keyIndex = 0;
+    
+            for (let char of text.toUpperCase()) {
+                if (alphabet.includes(char)) {
+                    const shift = alphabet.indexOf(keyUpper[keyIndex % keyUpper.length]);
+                    const base = alphabet.indexOf(char);
+                    const shiftedIndex = (action === 'decrypt' ? (base - shift + 26) : (base + shift)) % 26;
+                    result += alphabet[shiftedIndex];
+                    keyIndex++;
+                } else {
+                    result += char;
+                }
+            }
+    
+            return result;
+        }
+    
+        // Fungsi untuk Affine Cipher
+        function affineCipher(text, a, b, action) {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const mod = 26;
+    
+            function modInverse(a, mod) {
+                for (let i = 1; i < mod; i++) {
+                    if ((a * i) % mod === 1) return i;
+                }
+                return 1; // Default case if no inverse found (this should not happen if a is coprime with 26)
+            }
+    
+            const aInv = modInverse(a, mod);
+    
+            return text.toUpperCase().replace(/[A-Z]/g, function(char) {
+                const x = alphabet.indexOf(char);
+                const resultIndex = (action === 'decrypt' ? (aInv * (x - b)) : (a * x + b)) % mod;
+                return alphabet[(resultIndex + mod) % mod];
+            });
+        }
+    
+        // Event listener untuk Vigenère Cipher
+        document.getElementById('vigenereEncrypt').addEventListener('click', function() {
+            const input = document.getElementById('vigenereInput').value;
+            const key = document.getElementById('vigenereKey').value;
+            const result = vigenereCipher(input, key, 'encrypt');
+            document.getElementById('vigenereOutput').value = result;
+        });
+    
+        document.getElementById('vigenereDecrypt').addEventListener('click', function() {
+            const input = document.getElementById('vigenereInput').value;
+            const key = document.getElementById('vigenereKey').value;
+            const result = vigenereCipher(input, key, 'decrypt');
+            document.getElementById('vigenereOutput').value = result;
+        });
+    
+        // Event listener untuk Affine Cipher
+        document.getElementById('affineEncrypt').addEventListener('click', function() {
+            const input = document.getElementById('affineInput').value;
+            const a = parseInt(document.getElementById('affineA').value);
+            const b = parseInt(document.getElementById('affineB').value);
+            const result = affineCipher(input, a, b, 'encrypt');
+            document.getElementById('affineOutput').value = result;
+        });
+    
+        document.getElementById('affineDecrypt').addEventListener('click', function() {
+            const input = document.getElementById('affineInput').value;
+            const a = parseInt(document.getElementById('affineA').value);
+            const b = parseInt(document.getElementById('affineB').value);
+            const result = affineCipher(input, a, b, 'decrypt');
+            document.getElementById('affineOutput').value = result;
+        });
+    
+        // Event listener untuk tombol salin/copy pada Vigenère Cipher
+        document.getElementById('vigenereCopy').addEventListener('click', function() {
+            const result = document.getElementById('vigenereOutput');
+            result.select();
+            document.execCommand('copy');
+        });
+    
+        // Event listener untuk tombol salin/copy pada Affine Cipher
+        document.getElementById('affineCopy').addEventListener('click', function() {
+            const result = document.getElementById('affineOutput');
+            result.select();
+            document.execCommand('copy');
+        });
+    </script>
+    <script>
+        // Playfair Cipher Function
+        function playfairCipher(text, key, action) {
+            function createMatrix(key) {
+                const matrix = [];
+                key = key.toUpperCase().replace(/[^A-Z]/g, '');
+                const usedChars = new Set();
+                const alphabet = 'ABCDEFGHIKLMNOPQRSTUVWXYZ'; // 'J' is merged with 'I'
+
+                for (let char of key) {
+                    if (!usedChars.has(char)) {
+                        usedChars.add(char);
+                        matrix.push(char);
+                    }
+                }
+
+                for (let char of alphabet) {
+                    if (!usedChars.has(char)) {
+                        usedChars.add(char);
+                        matrix.push(char);
+                    }
+                }
+
+                return matrix;
+            }
+
+            function formatText(text) {
+                text = text.toUpperCase().replace(/[^A-Z]/g, '');
+                text = text.replace(/J/g, 'I');
+                let formattedText = '';
+                for (let i = 0; i < text.length; i++) {
+                    if (i > 0 && text[i] === text[i - 1]) {
+                        formattedText += 'X';
+                    }
+                    formattedText += text[i];
+                }
+                if (formattedText.length % 2 !== 0) {
+                    formattedText += 'X';
+                }
+                return formattedText;
+            }
+
+            function getPairs(text) {
+                const pairs = [];
+                for (let i = 0; i < text.length; i += 2) {
+                    pairs.push(text[i] + text[i + 1]);
+                }
+                return pairs;
+            }
+
+            function findPosition(matrix, char) {
+                const index = matrix.indexOf(char);
+                return [Math.floor(index / 5), index % 5];
+            }
+
+            function encryptPair(pair, matrix) {
+                const [row1, col1] = findPosition(matrix, pair[0]);
+                const [row2, col2] = findPosition(matrix, pair[1]);
+
+                if (row1 === row2) {
+                    return matrix[row1 * 5 + (col1 + 1) % 5] + matrix[row2 * 5 + (col2 + 1) % 5];
+                } else if (col1 === col2) {
+                    return matrix[((row1 + 1) % 5) * 5 + col1] + matrix[((row2 + 1) % 5) * 5 + col2];
+                } else {
+                    return matrix[row1 * 5 + col2] + matrix[row2 * 5 + col1];
+                }
+            }
+
+            function decryptPair(pair, matrix) {
+                const [row1, col1] = findPosition(matrix, pair[0]);
+                const [row2, col2] = findPosition(matrix, pair[1]);
+
+                if (row1 === row2) {
+                    return matrix[row1 * 5 + (col1 + 4) % 5] + matrix[row2 * 5 + (col2 + 4) % 5];
+                } else if (col1 === col2) {
+                    return matrix[((row1 + 4) % 5) * 5 + col1] + matrix[((row2 + 4) % 5) * 5 + col2];
+                } else {
+                    return matrix[row1 * 5 + col2] + matrix[row2 * 5 + col1];
+                }
+            }
+
+            const matrix = createMatrix(key);
+            text = formatText(text);
+            const pairs = getPairs(text);
+
+            let result = '';
+            for (const pair of pairs) {
+                if (action === 'encrypt') {
+                    result += encryptPair(pair, matrix);
+                } else {
+                    result += decryptPair(pair, matrix);
+                }
+            }
+
+            return result;
+        }
+
+        // Event listeners for Playfair Cipher
+        document.getElementById('playfairEncrypt').addEventListener('click', () => {
+            const input = document.getElementById('playfairInput').value;
+            const key = document.getElementById('playfairKey').value;
+            const result = playfairCipher(input, key, 'encrypt');
+            document.getElementById('playfairOutput').value = result;
+        });
+
+        document.getElementById('playfairDecrypt').addEventListener('click', () => {
+            const input = document.getElementById('playfairInput').value;
+            const key = document.getElementById('playfairKey').value;
+            const result = playfairCipher(input, key, 'decrypt');
+            document.getElementById('playfairOutput').value = result;
+        });
+
+        document.getElementById('playfairCopy').addEventListener('click', () => {
+            const output = document.getElementById('playfairOutput');
+            output.select();
+            document.execCommand('copy');
+        });
+
+
+        // Hill Cipher Function
+        // function hillCipher(text, key, action) {
+        //     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        //     const mod = 26;
+
+        //     function matrixInverse(matrix) {
+        //         const n = matrix.length;
+        //         const det = determinant(matrix);
+        //         const detInv = modInverse(det, mod);
+        //         const adjoint = [];
+                
+        //         function determinant(matrix) {
+        //             if (matrix.length === 1) return matrix[0][0];
+        //             if (matrix.length === 2) return (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]) % mod;
+                    
+        //             let det = 0;
+        //             for (let i = 0; i < matrix.length; i++) {
+        //                 const minor = matrix.map(row => row.slice());
+        //                 minor.splice(0, 1);
+        //                 for (let j = 0; j < minor.length; j++) minor[j].splice(i, 1);
+        //                 det += matrix[0][i] * ((i % 2 === 0 ? 1 : -1) * determinant(minor));
+        //                 det = (det + mod) % mod;
+        //             }
+        //             return det;
+        //         }
+
+        //         function modInverse(a, m) {
+        //             let m0 = m, t, q;
+        //             let x0 = 0, x1 = 1;
+        //             if (m === 1) return 0;
+        //             while (a > 1) {
+        //                 q = Math.floor(a / m);
+        //                 t = m;
+        //                 m = a % m;
+        //                 a = t;
+        //                 t = x0;
+        //                 x0 = x1 - q * x0;
+        //                 x1 = t;
+        //             }
+        //             if (x1 < 0) x1 += m0;
+        //             return x1;
+        //         }
+
+        //         for (let i = 0; i < n; i++) {
+        //             adjoint[i] = [];
+        //             for (let j = 0; j < n; j++) {
+        //                 const minor = matrix.map(row => row.slice());
+        //                 minor.splice(i, 1);
+        //                 for (let k = 0; k < n - 1; k++) minor[k].splice(j, 1);
+        //                 adjoint[j][i] = ((determinant(minor) * detInv) % mod + mod) % mod;
+        //             }
+        //         }
+        //         return adjoint;
+        //     }
+
+        //     function processText(text, matrix) {
+        //         text = text.toUpperCase().replace(/[^A-Z]/g, '');
+        //         const n = matrix.length;
+        //         let result = '';
+
+        //         // Pad the text if necessary
+        //         while (text.length % n !== 0) {
+        //             text += 'X';  // Padding character
+        //         }
+
+        //         for (let i = 0; i < text.length; i += n) {
+        //             const textBlock = text.slice(i, i + n).split('').map(char => alphabet.indexOf(char));
+        //             let resultBlock = [];
+
+        //             for (let row = 0; row < n; row++) {
+        //                 let sum = 0;
+        //                 for (let col = 0; col < n; col++) {
+        //                     sum += textBlock[col] * matrix[row][col];
+        //                 }
+        //                 resultBlock[row] = (sum % mod + mod) % mod;
+        //             }
+        //             result += resultBlock.map(index => alphabet[index]).join('');
+        //         }
+
+        //         return result;
+        //     }
+
+        //     const keyMatrix = key.split(',').map(row => row.split(' ').map(Number));
+        //     if (action === 'encrypt') {
+        //         return processText(text, keyMatrix);
+        //     } else {
+        //         const inverseMatrix = matrixInverse(keyMatrix);
+        //         return processText(text, inverseMatrix);
+        //     }
+        // }
+
+        // // Event listeners for Hill Cipher
+        // document.getElementById('hillEncrypt').addEventListener('click', () => {
+        //     const input = document.getElementById('hillInput').value;
+        //     const key = document.getElementById('hillKey').value;
+        //     const result = hillCipher(input, key, 'encrypt');
+        //     document.getElementById('hillOutput').value = result;
+        // });
+
+        // document.getElementById('hillDecrypt').addEventListener('click', () => {
+        //     const input = document.getElementById('hillInput').value;
+        //     const key = document.getElementById('hillKey').value;
+        //     const result = hillCipher(input, key, 'decrypt');
+        //     document.getElementById('hillOutput').value = result;
+        // });
+
+        // document.getElementById('hillCopy').addEventListener('click', () => {
+        //     const output = document.getElementById('hillOutput');
+        //     output.select();
+        //     document.execCommand('copy');
+        // });
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        // AES Encryption and Decryption
+        function aesCipher(text, key, iv, action) {
+            try {
+                key = CryptoJS.enc.Utf8.parse(key);
+                iv = CryptoJS.enc.Utf8.parse(iv);
+                
+                let encryptedText;
+                if (action === 'encrypt') {
+                    encryptedText = CryptoJS.AES.encrypt(text, key, {
+                        iv: iv,
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                    }).toString();
+                } else {
+                    const bytes = CryptoJS.AES.decrypt(text, key, {
+                        iv: iv,
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                    });
+                    encryptedText = CryptoJS.enc.Utf8.stringify(bytes);
+                }
+                return encryptedText;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Error occurred';
+            }
+        }
+    
+        // Event listeners for AES Cipher
+        document.getElementById('aesEncrypt').addEventListener('click', () => {
+            const input = document.getElementById('aesInput').value;
+            const key = document.getElementById('aesKey').value;
+            const iv = document.getElementById('aesIv').value;
+            const result = aesCipher(input, key, iv, 'encrypt');
+            document.getElementById('aesOutput').value = result;
+        });
+    
+        document.getElementById('aesDecrypt').addEventListener('click', () => {
+            const input = document.getElementById('aesInput').value;
+            const key = document.getElementById('aesKey').value;
+            const iv = document.getElementById('aesIv').value;
+            const result = aesCipher(input, key, iv, 'decrypt');
+            document.getElementById('aesOutput').value = result;
+        });
+    
+        document.getElementById('aesCopy').addEventListener('click', () => {
+            const output = document.getElementById('aesOutput');
+            output.select();
+            document.execCommand('copy');
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/10.6.0/jsrsasign-all-min.js"></script>
+    <script>
+        function rsaCipher(text, publicKey, privateKey, action) {
+            try {
+                let result;
+                if (action === 'encrypt') {
+                    // Encrypt text using RSA public key
+                    const rsaKey = KEYUTIL.getKey(publicKey);
+                    result = KJUR.crypto.Cipher.encrypt(text, rsaKey);
+                } else {
+                    // Decrypt text using RSA private key
+                    const rsaKey = KEYUTIL.getKey(privateKey);
+                    result = KJUR.crypto.Cipher.decrypt(text, rsaKey);
+                }
+                return result;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Error occurred';
+            }
+        }
+    
+        // Event listeners for RSA Cipher
+        document.getElementById('rsaEncrypt').addEventListener('click', () => {
+            const input = document.getElementById('rsaInput').value;
+            const publicKey = document.getElementById('rsaPublicKey').value;
+            const result = rsaCipher(input, publicKey, null, 'encrypt');
+            document.getElementById('rsaOutput').value = result;
+        });
+    
+        document.getElementById('rsaDecrypt').addEventListener('click', () => {
+            const input = document.getElementById('rsaInput').value;
+            const privateKey = document.getElementById('rsaPrivateKey').value;
+            const result = rsaCipher(input, null, privateKey, 'decrypt');
+            document.getElementById('rsaOutput').value = result;
+        });
+    
+        document.getElementById('rsaCopy').addEventListener('click', () => {
+            const output = document.getElementById('rsaOutput');
+            output.select();
+            document.execCommand('copy');
+        });
+    </script>    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function caesarEncrypt(text, shift) {
+            return text.split('').map(char => {
+                const code = char.charCodeAt(0);
+                if (char >= 'a' && char <= 'z') {
+                    return String.fromCharCode(((code - 97 + shift) % 26) + 97);
+                } else if (char >= 'A' && char <= 'Z') {
+                    return String.fromCharCode(((code - 65 + shift) % 26) + 65);
+                }
+                return char;
+            }).join('');
+        }
+    
+        function caesarDecrypt(text, shift) {
+            return caesarEncrypt(text, -shift);
+        }
+    
+        function railFenceEncrypt(text, numRails) {
+            const rails = Array.from({ length: numRails }, () => []);
+            let rail = 0, direction = 1;
+            for (let char of text) {
+                rails[rail].push(char);
+                rail += direction;
+                if (rail === 0 || rail === numRails - 1) direction *= -1;
+            }
+            return rails.flat().join('');
+        }
+    
+        function railFenceDecrypt(text, numRails) {
+            const len = text.length;
+            const rails = Array.from({ length: numRails }, () => []);
+            let rail = 0, direction = 1;
+            for (let i = 0; i < len; i++) {
+                rails[rail].push(null);
+                rail += direction;
+                if (rail === 0 || rail === numRails - 1) direction *= -1;
+            }
+            let index = 0;
+            for (let railArr of rails) {
+                for (let i = 0; i < railArr.length; i++) {
+                    railArr[i] = text[index++];
+                }
+            }
+            let result = '';
+            rail = 0; direction = 1;
+            for (let i = 0; i < len; i++) {
+                result += rails[rail].shift();
+                rail += direction;
+                if (rail === 0 || rail === numRails - 1) direction *= -1;
+            }
+            return result;
+        }
+    
+        function base64Encode(text) {
+            return btoa(text);
+        }
+    
+        function base64Decode(text) {
+            return atob(text);
+        }
+    
+        document.getElementById('customEncrypt').addEventListener('click', function() {
+            const inputText = document.getElementById('customInput').value;
+            let key = parseInt(document.getElementById('customKey').value) || 0;
+            key = Math.max(0, Math.min(key, 25)); // Limit key to between 0 and 25
+    
+            let encryptedText = caesarEncrypt(inputText, key);
+            encryptedText = railFenceEncrypt(encryptedText, 3); // Example with 3 rails
+            encryptedText = base64Encode(encryptedText);
+    
+            document.getElementById('customOutput').value = encryptedText;
+        });
+    
+        document.getElementById('customDecrypt').addEventListener('click', function() {
+            const inputText = document.getElementById('customInput').value;
+            let key = parseInt(document.getElementById('customKey').value) || 0;
+            key = Math.max(0, Math.min(key, 25)); // Limit key to between 0 and 25
+    
+            let decryptedText = base64Decode(inputText);
+            decryptedText = railFenceDecrypt(decryptedText, 3); // Example with 3 rails
+            decryptedText = caesarDecrypt(decryptedText, key);
+    
+            document.getElementById('customOutput').value = decryptedText;
+        });
+    
+        document.getElementById('customCopy').addEventListener('click', function() {
+            const output = document.getElementById('customOutput');
+            output.select();
+            document.execCommand('copy');
+        });
+    });
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Caesar Cipher encryption
+        function caevigEncrypt(text, shift) {
+            return text.split('').map(char => {
+                const code = char.charCodeAt(0);
+                if (char >= 'a' && char <= 'z') {
+                    return String.fromCharCode(((code - 97 + shift) % 26) + 97);
+                } else if (char >= 'A' && char <= 'Z') {
+                    return String.fromCharCode(((code - 65 + shift) % 26) + 65);
+                }
+                return char;
+            }).join('');
+        }
+
+        // Caesar Cipher decryption
+        function caevigDecrypt(text, shift) {
+            return caevigEncrypt(text, -shift);
+        }
+
+        // Vigenère Cipher encryption
+        function vigenereEncrypt(text, key) {
+            let result = '';
+            let keyIndex = 0;
+            for (let char of text) {
+                if (char >= 'a' && char <= 'z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 97 + key.charCodeAt(keyIndex % key.length) - 97) % 26) + 97);
+                    keyIndex++;
+                } else if (char >= 'A' && char <= 'Z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 65 + key.charCodeAt(keyIndex % key.length) - 65) % 26) + 65);
+                    keyIndex++;
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+
+        // Vigenère Cipher decryption
+        function vigenereDecrypt(text, key) {
+            let result = '';
+            let keyIndex = 0;
+            for (let char of text) {
+                if (char >= 'a' && char <= 'z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 97 - (key.charCodeAt(keyIndex % key.length) - 97) + 26) % 26) + 97);
+                    keyIndex++;
+                } else if (char >= 'A' && char <= 'Z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 65 - (key.charCodeAt(keyIndex % key.length) - 65) + 26) % 26) + 65);
+                    keyIndex++;
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+
+        // Base64 encoding
+        function base64Encode(text) {
+            return btoa(text);
+        }
+
+        // Base64 decoding
+        function base64Decode(text) {
+            return atob(text);
+        }
+
+        document.getElementById('caevigEncrypt').addEventListener('click', function() {
+            const inputText = document.getElementById('caevigInput').value;
+            const caevigShift = parseInt(document.getElementById('caevigShift').value) || 0;
+            const caevigKey = document.getElementById('caevigKey').value;
+
+            if (caevigShift < 1 || caevigShift > 25) {
+                return; // Invalid Caesar shift
+            }
+
+            let encryptedText = caevigEncrypt(inputText, caevigShift);
+            encryptedText = vigenereEncrypt(encryptedText, caevigKey);
+            encryptedText = base64Encode(encryptedText);
+
+            document.getElementById('caevigOutput').value = encryptedText;
+        });
+
+        document.getElementById('caevigDecrypt').addEventListener('click', function() {
+            const inputText = document.getElementById('caevigInput').value;
+            const caevigShift = parseInt(document.getElementById('caevigShift').value) || 0;
+            const caevigKey = document.getElementById('caevigKey').value;
+
+            if (caevigShift < 1 || caevigShift > 25) {
+                return; // Invalid Caesar shift
+            }
+
+            let decryptedText = base64Decode(inputText);
+            decryptedText = vigenereDecrypt(decryptedText, caevigKey);
+            decryptedText = caevigDecrypt(decryptedText, caevigShift);
+
+            document.getElementById('caevigOutput').value = decryptedText;
+        });
+
+        document.getElementById('caevigCopy').addEventListener('click', function() {
+            const output = document.getElementById('caevigOutput');
+            output.select();
+            document.execCommand('copy');
+        });
+    });
+</script>
+</body>
+</html>
